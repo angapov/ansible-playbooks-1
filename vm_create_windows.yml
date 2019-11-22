@@ -92,6 +92,7 @@
       ansible_password: "{{ vm_password }}"
       ansible_connection: winrm
       ansible_winrm_transport: credssp
+      ansible_winrm_server_cert_validation: ignore
     when: state == "present"
 
 - name: provision new azure host
