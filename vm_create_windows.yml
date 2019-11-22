@@ -7,7 +7,7 @@
   connection: local
   vars:
     resource_group: "{{ resource_group_name }}"
-    vm_name: "wintestvm43564776"
+    vm_name: "wintestvm43694"
     vm_user: azureuser
     vm_password: MyPassword123!!!
     vm_size: "{{ vm_size }}"
