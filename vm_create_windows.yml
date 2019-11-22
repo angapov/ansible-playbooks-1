@@ -83,3 +83,23 @@
       host: '{{ azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress }}'
       timeout: 600
     when: state == "present"
+
+  - name: wait for the WinRM port to come online
+    add_host:
+      group: windows
+      name: '{{ azure_vm.properties.networkProfile.networkInterfaces[0].properties.ipConfigurations[0].properties.publicIPAddress.properties.ipAddress }}'
+      ansible_user: "{{ vm_user }}"
+      ansible_password: "{{ vm_password }}"
+      ansible_connection: winrm
+      ansible_winrm_transport: credssp
+    when: state == "present"
+
+- name: provision new azure host
+  hosts: windows
+  tasks:
+  - name: Install all security, critical, and rollup updates without a scheduled task
+    win_updates:
+      category_names:
+        - SecurityUpdates
+        - CriticalUpdates
+        - UpdateRollups
